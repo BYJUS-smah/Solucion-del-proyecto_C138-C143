@@ -1,5 +1,5 @@
 
-/*Creado por prashant shukla */
+/*Creado por Prashant Shukla */
 
 var paddle2 =10,paddle1=10;
 
@@ -63,11 +63,12 @@ function gotPoses(results)
 function startGame()
 {
   game_status = "start";
-  document.getElementById("status").innerHTML = "El juego se está cargando";
+  document.getElementById("status").innerHTML = "El juego está cargado";
 }
 
 function draw(){
-
+if(game_status == "start")
+{
   background(0); 
   image(video, 0, 0, 700, 600);
 
@@ -86,10 +87,8 @@ function draw(){
     circle(rightWristX, rightWristY, 30);
   }
 
-  if(game_status == "start")
-  {
-    document.getElementById("status").innerHTML = "El juego se ha cargado";
-    //Llamar a la función paddleInCanvas  
+
+    //Llamar a la función paddleInCanvas 
     paddleInCanvas();
         
     //Paleta izquierda
@@ -111,7 +110,7 @@ function draw(){
     //Llamar a la función drawScore
     drawScore();
 
-    //Llamar a la función models call
+    //Llamar a la función models  
     models();
 
     //Llamar a la función move, la cual es muy importante
@@ -149,9 +148,9 @@ function drawScore(){
     textSize(20);
     fill("white");
     stroke(250,0,0)
-    text("Jugador:",100,50)
+    text("Jugador: ",100,50)
     text(playerscore,140,50);
-    text("Computadora:",500,50)
+    text("Computadora: ",500,50)
     text(pcscore,555,50)
 }
 
@@ -171,6 +170,7 @@ function move(){
   if (ball.y >= paddle1Y&& ball.y <= paddle1Y + paddle1Height) {
     ball.dx = -ball.dx+0.5; 
     ball_touch_paddel.play();
+    playerscore++;
   }
   else{
     pcscore++;
@@ -187,24 +187,24 @@ if(pcscore ==4){
     stroke("white");
     textSize(25);
     text("¡Fin del juego!",width/2,height/2);
-    text("Presiona el botón de reinicio para jugar de nuevo!",width/2,height/2+30)
+    text("Presiona el botón de reinicio para jugar de nuevo",width/2,height/2+30)
     noLoop();
     pcscore = 0;
-}
+ }
    if(ball.y+ball.r > height || ball.y-ball.r <0){
        ball.dy =- ball.dy;
    }   
 }
 
 
-//Ancho, altura y velocidad de la pelota escritos en el canvas 
+//Ancho, altura y velocidad de la pelota escritos en el canvas
 function models(){
     textSize(18);
     fill(255);
     noStroke();
-    text("Ancho:"+width,135,15);
-    text("Velocidad:"+abs(ball.dx),50,15);
-    text("Altura:"+height,235,15)
+    text("Ancho: "+width,135,15);
+    text("Velocidad: "+abs(ball.dx),50,15);
+    text("Altura: "+height,235,15)
 }
 
 
@@ -222,6 +222,7 @@ function paddleInCanvas(){
 
 function restart()
 {
-  pcscore = 0;
   loop();
+  pcscore = 0;
+  playerscore = 0;
 }
